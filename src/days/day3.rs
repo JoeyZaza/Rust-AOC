@@ -1,16 +1,13 @@
 use std::vec;
 
-pub fn main(input: String) -> i32 {
+pub fn main(input: String) -> usize {
     let lines = input.lines();
     let mut lookup_table = ('a'..='z').into_iter().collect::<Vec<char>>();
     let rnge = ('A'..='Z').into_iter();
     for lett in rnge {
         lookup_table.push(lett);
     }
-    dbg!(&lookup_table);
-    //TODO: Keep main() simple - Make funcs
 
-    //TODO: Iterate over lines and call functions on them
     let mut v = vec![];
     let mut sum = 0;
     for line in lines {
@@ -28,11 +25,11 @@ pub fn main(input: String) -> i32 {
     return sum;
 }
 
-fn lookup(ch: Option<char>, table: &Vec<char>) -> Result<i32, &'static str> {
+fn lookup(ch: Option<char>, table: &Vec<char>) -> Result<usize, &'static str> {
     if let Some(_character) = ch {
-        for i in 1..table.len() {
+        for i in 1..table.len() + 1 {
             if ch.unwrap() == table[i - 1] {
-                return Ok(i as i32);
+                return Ok(i);
             }
         }
     } else {
@@ -43,15 +40,10 @@ fn lookup(ch: Option<char>, table: &Vec<char>) -> Result<i32, &'static str> {
 
 fn returns_duplicate(line: &str) -> Option<char> {
     let mut comp_one: Vec<char> = vec![];
-    let mut duplicates: Vec<char> = vec![];
     for (i, ch) in line.chars().enumerate() {
-        // println!("Compartment one: {:?}", comp_one);
-        // println!("ch: {ch}");
         if i < line.len() / 2 {
             comp_one.push(ch);
         } else if comp_one.contains(&ch) {
-            // println!("Ch found: {ch}");
-            duplicates.push(ch);
             return Some(ch);
         }
     }
